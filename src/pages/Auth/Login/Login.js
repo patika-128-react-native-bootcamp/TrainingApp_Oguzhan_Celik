@@ -20,7 +20,6 @@ export default function Login({navigation}) {
            await auth().signInWithEmailAndPassword(formValues.usermail,formValues.password);
            setLoading(false);
             console.log('başarılı')
-            navigation.navigate("DashboardStack")
         }
         catch (error) {
             //Alert Ekleyebilirsin.
@@ -32,6 +31,7 @@ export default function Login({navigation}) {
         navigation.navigate('SignupPage');
     }
 
+    
 
    
 
