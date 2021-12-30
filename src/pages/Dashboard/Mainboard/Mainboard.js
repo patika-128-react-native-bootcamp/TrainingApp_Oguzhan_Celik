@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-export default function signin() {
+export default function Mainboard() {
     return (
         <View>
-            <Text>Sign in Page</Text>
+            <Text>Main Board</Text>
+            <Text>Main Board</Text>
         </View>
     )
 }

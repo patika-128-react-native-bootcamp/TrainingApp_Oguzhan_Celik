@@ -1,10 +1,6 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import Navigation from './Navigation';
 
 export default function Router() {
-    return (
-        <View>
-            <Text>Deneme</Text>
-        </View>
-    )
+  return <Navigation />;
 }
