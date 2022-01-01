@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import Button from '../../../components/Button';
 import MapView, {
@@ -12,37 +12,32 @@ import styles from './NewActivity.styles';
 import Geolocation from '@react-native-community/geolocation';
 
 export default function NewActivity() {
-  const [coord, setCoord] = useState();
-  const [coords, setCoords] = useState();
+  const [coords, setCoords] = useState([{latitude: 44.8025259, longitude: 36.4351431}]);
+  const [status,setStatus]=useState(true);
+  const [time,setTime]=useState(false);
 
-  // function Start(){
-  //   Geolocation.getCurrentPosition(
-  //     (info) => {
-  //       console.log(info)
-  //       setCoord(info)
+  function Start(){
+    if(time){
+      Geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position)
+          setCoords([...coords,{latitude: position.coords.latitude, longitude: position.coords.longitude}]);
+  
+        },
+        (error) => console.log(error),
+        {
+          enableHighAccuracy: true,
+        },
 
-  //     },
-  //     (error) => console.log(error),
-  //     {
-  //       enableHighAccuracy: true,
-  //     },
-  //   );
-  // }
+      );
+      Start()
+      
+    }
+  }
+  
 
-  // Geolocation.watchPosition(
-  //   position => {
-  //     setCoord(position.coords);
-  //     setCoords([
-  //       ...coords,
-  //       [position.coords.latitude, position.coords.longitude],
-  //     ]);
-  //   },
-  //   error => {
-  //     console.log(error);
-  //   },
-  // );
 
-  // console.log(coords);
+  
   // function Finish(){
   //   Geolocation.getCurrentPosition(
   //     (info) => {
@@ -58,9 +53,9 @@ export default function NewActivity() {
   //       enableHighAccuracy: true,
   //     },
   //   );
-
   // }
 
+  //2 konum arasındaki mesafeyi ölçer
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
     var dLat = deg2rad(lat2 - lat1); // deg2rad below
@@ -75,25 +70,33 @@ export default function NewActivity() {
     var d = R * c; // Distance in km
     return d;
   }
-
   function deg2rad(deg) {
     return deg * (Math.PI / 180);
   }
+
+  // Geolocation.watchPosition(
+  //   position => {
+  //     setCoords([...coords,{latitude: position.coords.latitude, longitude: position.coords.longitude}]);
+  //   },
+  //   error => {
+  //     console.log(error);
+  //   },
+  //   {
+  //     enableHighAccuracy: true,
+  //   },
+  // );
+
+  // console.log(coords);
+  
 
   return (
     <View style={styles.container}>
       <MapView provider={PROVIDER_GOOGLE} style={styles.mapView}>
         {/* {coord !== undefined && <Marker coordinate={{ latitude : coord.coords.latitude , longitude : coord.coords.longitude }} />} */}
         {/* {coord !== undefined && <Marker coordinate={coord} />} */}
-        <Polyline
-          coordinates={[
-            {latitude: 37.8025259, longitude: -100.4351431},
-            {latitude: 60.7896386, longitude: -101.421646},
-            {latitude: 59.7665248, longitude: -102.4161628},
-            {latitude: 88.7734153, longitude: -1.4577787},
-            {latitude: 52.7948605, longitude: -10.4596065},
-            {latitude: 2.8025259, longitude: -56.4351431},
-          ]}
+        
+        {status && <Polyline
+          coordinates={coords}
           strokeColor="red" // fallback for when `strokeColors` is not supported by the map-provider
           strokeColors={[
             '#7F0000',
@@ -104,12 +107,12 @@ export default function NewActivity() {
             '#7F0000',
           ]}
           strokeWidth={3}
-        />
+        />}
       </MapView>
 
       <View style={styles.buttonContainer}>
-        <Button text={'Başlat'} onPress={null} />
-        <Button text={'Bitir'} onPress={null} />
+        <Button text={'Başlat'} onPress={()=>{setTime(true);Start()}} />
+        <Button text={'Bitir'} onPress={()=>setTime(false)} />
       </View>
     </View>
   );

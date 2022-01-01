@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "892441921127",
-    "project_id": "trainingapp-fdb62",
-    "storage_bucket": "trainingapp-fdb62.appspot.com"
+    "project_number": "104889670845",
+    "project_id": "trainingapp-336715",
+    "storage_bucket": "trainingapp-336715.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:892441921127:android:67feefe632acaa4fca36c2",
+        "mobilesdk_app_id": "1:104889670845:android:d7f3cbd840c355522b6bd4",
         "android_client_info": {
-          "package_name": "com.trainingapp"
+          "package_name": "com.Runtrainingapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "892441921127-5lmpintkktdmtiulkakrthnvsgpdjoup.apps.googleusercontent.com",
+          "client_id": "104889670845-3sagung5kmg53hrjqf7v84mfqn1ot05r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB9qDdC17jGvoLjcZgsnpEUlF9Uyu3V0QA"
+          "current_key": "AIzaSyAgRFloxwEAFhxHy2spocdp1xicsqrRb9s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "892441921127-5lmpintkktdmtiulkakrthnvsgpdjoup.apps.googleusercontent.com",
+              "client_id": "104889670845-3sagung5kmg53hrjqf7v84mfqn1ot05r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "104889670845-6f9428cvvns7mb407b2odjatju0koios.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.TrainingApp"
+              }
             }
           ]
         }

@@ -1,4 +1,4 @@
-package com.trainingapp;
+package com.Runtrainingapp;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
