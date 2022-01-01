@@ -1,4 +1,4 @@
-package com.trainingapp;
+package com.Runtrainingapp;
 
 import android.app.Application;
 import android.content.Context;
