@@ -1,60 +1,76 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import Button from '../../../components/Button';
-import MapView, {
-  PROVIDER_GOOGLE,
-  LatLng,
-  Marker,
-  Polyline,
-  Polygon
-} from 'react-native-maps';
-import styles from './NewActivity.styles';
+import React, {useEffect, useState,useRef} from 'react';
 import Geolocation from '@react-native-community/geolocation';
+import NewActivityLayout from './layout/NewActivityLayout';
+import MapView, {PROVIDER_GOOGLE, Marker, LatLng} from 'react-native-maps';
+
 
 export default function NewActivity() {
-  const [coords, setCoords] = useState([{latitude: 44.8025259, longitude: 36.4351431}]);
-  const [status,setStatus]=useState(true);
-  const [time,setTime]=useState(false);
-
-  function Start(){
-    if(time){
-      Geolocation.getCurrentPosition(
-        (position) => {
-          console.log(position)
-          setCoords([...coords,{latitude: position.coords.latitude, longitude: position.coords.longitude}]);
+  const [coord, setCoord] = useState([]);
+  const [loading,setLoading] = useState(false);
+  const timerRef = useRef(null);
   
-        },
-        (error) => console.log(error),
-        {
-          enableHighAccuracy: true,
-        },
+  // function Start(){
+  //     Geolocation.getCurrentPosition(
+  //       (position) => {
+  //         console.log(position)
+  //         setCoord([...coord,{latitude: position.coords.latitude, longitude: position.coords.longitude}]);
+  //       },
+  //       (error) => console.log(error),
+  //       {
+  //         enableHighAccuracy: true,
+  //       },
+  //     );
+  // }
+  
 
-      );
-      Start()
-      
-    }
+
+  function handleLocation(c){
+      setCoord([...coord,{
+        latitude:c.coords.latitude,
+        longitude:c.coords.longitude
+      }])
   }
   
+  const getPosition=()=>{
+      Geolocation.getCurrentPosition(
+        (c)=>{handleLocation(c);},
+        (error)=>console.log(error),
+        {
+          enableHighAccuracy:true
+        }
+      )
+  }
 
+  const handleTimer=(t)=>{
+    console.log(t)
+    if(t%2==0){
+      getPosition()
+    }
+  }
+
+
+
+  useEffect(()=>{
+    Geolocation.getCurrentPosition((c)=>{handleLocation(c);setLoading(true)}, 
+    (error)=>console.log(error),{
+      enableHighAccuracy:true
+    }
+    );
+  },[])
 
   
-  // function Finish(){
-  //   Geolocation.getCurrentPosition(
-  //     (info) => {
-  //       const lastLocation={
-  //         latitude:info.coords.latitude,
-  //         longitude:info.coords.longitude
-  //       }
-  //       const distance=getDistanceFromLatLonInKm(coord.coords.latitude ,coord.coords.longitude,lastLocation.latitude,lastLocation.longitude)
-  //     console.log(distance);
-  //     },
-  //     (error) => console.log(error),
-  //     {
-  //       enableHighAccuracy: true,
-  //     },
-  //   );
-  // }
 
+  function handleStart(){
+    timerRef.current.start();
+  }
+
+  function handleFinish(){
+    timerRef.current.stop();
+  }
+
+
+ 
+ 
   //2 konum arasındaki mesafeyi ölçer
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
@@ -73,47 +89,8 @@ export default function NewActivity() {
   function deg2rad(deg) {
     return deg * (Math.PI / 180);
   }
-
-  // Geolocation.watchPosition(
-  //   position => {
-  //     setCoords([...coords,{latitude: position.coords.latitude, longitude: position.coords.longitude}]);
-  //   },
-  //   error => {
-  //     console.log(error);
-  //   },
-  //   {
-  //     enableHighAccuracy: true,
-  //   },
-  // );
-
-  // console.log(coords);
-  
-
   return (
-    <View style={styles.container}>
-      <MapView provider={PROVIDER_GOOGLE} style={styles.mapView}>
-        {/* {coord !== undefined && <Marker coordinate={{ latitude : coord.coords.latitude , longitude : coord.coords.longitude }} />} */}
-        {/* {coord !== undefined && <Marker coordinate={coord} />} */}
-        
-        {status && <Polyline
-          coordinates={coords}
-          strokeColor="red" // fallback for when `strokeColors` is not supported by the map-provider
-          strokeColors={[
-            '#7F0000',
-            '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-            '#B24112',
-            '#E5845C',
-            '#238C23',
-            '#7F0000',
-          ]}
-          strokeWidth={3}
-        />}
-      </MapView>
-
-      <View style={styles.buttonContainer}>
-        <Button text={'Başlat'} onPress={()=>{setTime(true);Start()}} />
-        <Button text={'Bitir'} onPress={()=>setTime(false)} />
-      </View>
-    </View>
+    <NewActivityLayout coord={coord} handleStart={handleStart} handleFinish={handleFinish} loading={loading} timerRef={timerRef} handleTimer={handleTimer}/>
+    
   );
 }
