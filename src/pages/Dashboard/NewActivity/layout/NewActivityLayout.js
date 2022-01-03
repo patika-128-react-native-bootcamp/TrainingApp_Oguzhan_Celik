@@ -9,7 +9,7 @@ import MapView, {
   Polygon
 } from 'react-native-maps';
 import {Timer} from 'react-native-element-timer';
-export default function NewActivityLayout({coord,handleStart,handleFinish,loading,timerRef,handleTimer}) {
+export default function NewActivityLayout({coord,handleStart,handleFinish,loading,timerRef,handleTimer,allData}) {
     return (
         <View style={styles.container}>
             <Timer
@@ -20,15 +20,17 @@ export default function NewActivityLayout({coord,handleStart,handleFinish,loadin
                     onPause={e => {}}
                     onEnd={e => {}}
                 />
-        {loading ? <MapView provider={PROVIDER_GOOGLE} style={styles.mapView} initialRegion={{
-            latitude:coord[0].latitude,
-            longitude:coord[0].longitude,
-            latitudeDelta:0.1,
-            longitudeDelta:0.2
-        }}>
-            {coord !== undefined && <Marker coordinate={coord[0]} />}
-          {/* {coord !== undefined && <Marker coordinate={coord[0]} />} */}
-        </MapView>: <ActivityIndicator/>}
+         <MapView
+                    style={{ flex: 4 }}
+                    provider={PROVIDER_GOOGLE}
+                >
+                <Marker coordinate={coord} />
+                    <Polyline
+                    coordinates={allData.allCoords}
+                    strokeColor="#FF0D10" // fallback for when strokeColors is not supported by the map-provider
+                        strokeWidth={6}
+                />
+            </MapView>
   
         <View style={styles.buttonContainer}>
           <Button text={'Başlat'} onPress={handleStart} />
