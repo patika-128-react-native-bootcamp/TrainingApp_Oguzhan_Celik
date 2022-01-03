@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AuthStack from './AuthStack';
-import DashboardStack from './DashboardStack';
+import DashboardTab from './DashboardTab';
 import auth from "@react-native-firebase/auth"
 
 
@@ -34,8 +34,8 @@ export default function Navigation() {
             </Stack.Navigator>):(
             <Stack.Navigator>
                 <Stack.Screen 
-                    name="DashboardStack"
-                    component={DashboardStack}
+                    name="DashboardTab"
+                    component={DashboardTab}
                 />
             </Stack.Navigator>)
             }

@@ -1,41 +1,36 @@
 import React, {useEffect, useState,useRef} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import NewActivityLayout from './layout/NewActivityLayout';
-import MapView, {PROVIDER_GOOGLE, Marker, LatLng} from 'react-native-maps';
-
+import { ActivityIndicator } from 'react-native';
 
 export default function NewActivity() {
-  const [coord, setCoord] = useState([]);
+  const [coord, setCoord] = useState({
+    latitude:0,
+    longitude:0,
+  });
+  const [status,setStatus]=useState(false);
+  const [allData, setAllData] = useState({
+    allCoords:[],
+    distance:0,
+    time:0
+  });
   const [loading,setLoading] = useState(false);
+
   const timerRef = useRef(null);
-  
-  // function Start(){
-  //     Geolocation.getCurrentPosition(
-  //       (position) => {
-  //         console.log(position)
-  //         setCoord([...coord,{latitude: position.coords.latitude, longitude: position.coords.longitude}]);
-  //       },
-  //       (error) => console.log(error),
-  //       {
-  //         enableHighAccuracy: true,
-  //       },
-  //     );
-  // }
-  
-
-
-  function handleLocation(c){
-      setCoord([...coord,{
-        latitude:c.coords.latitude,
-        longitude:c.coords.longitude
-      }])
-  }
   
   const getPosition=()=>{
       Geolocation.getCurrentPosition(
-        (c)=>{handleLocation(c);},
+        (c)=>{
+            setCoord({
+              latitude:c.coords.latitude,
+              longitude:c.coords.longitude
+            })
+        },
         (error)=>console.log(error),
         {
+          accuracy:{
+            android:"high"
+          },
           enableHighAccuracy:true
         }
       )
@@ -43,28 +38,57 @@ export default function NewActivity() {
 
   const handleTimer=(t)=>{
     console.log(t)
-    if(t%2==0){
+    if(t%3==0){
       getPosition()
     }
   }
 
-
+console.log(allData.allCoords);
 
   useEffect(()=>{
-    Geolocation.getCurrentPosition((c)=>{handleLocation(c);setLoading(true)}, 
-    (error)=>console.log(error),{
-      enableHighAccuracy:true
+    Geolocation.getCurrentPosition((c)=>{
+      setAllData({
+        allCoords:[{
+          latitude:c.coords.latitude,
+          longitude:c.coords.longitude
+        }]
+      })
+      setCoord({
+        latitude:c.coords.latitude,
+        longitude:c.coords.longitude
+      })
+      setLoading(false);
+    },
+    (error)=>console.log(error),
+    {
+      enableHighAccuracy:true,
     }
-    );
+    )
   },[])
 
-  
+  useEffect(()=>{
+    const length=allData.allCoords.length-1
+    if(coord.longitude !=0 && coord.longitude!=allData.allCoords[length].longitude){
+      setAllData({
+        allCoords:[...allData.allCoords,coord],
+        distance:allData.distance + getDistanceFromLatLonInKm(allData.allCoords[length].latitude,allData.allCoords[length].longitude,coord.latitude,coord.longitude),
+      })
+    }
+  },[coord])
+
+  if(loading){
+    return <ActivityIndicator/>
+  }
 
   function handleStart(){
-    timerRef.current.start();
+    if(!status){
+      timerRef.current.start();
+      setStatus(true)
+    }
   }
 
   function handleFinish(){
+
     timerRef.current.stop();
   }
 
@@ -89,8 +113,9 @@ export default function NewActivity() {
   function deg2rad(deg) {
     return deg * (Math.PI / 180);
   }
+
   return (
-    <NewActivityLayout coord={coord} handleStart={handleStart} handleFinish={handleFinish} loading={loading} timerRef={timerRef} handleTimer={handleTimer}/>
+    <NewActivityLayout coord={coord} handleStart={handleStart} handleFinish={handleFinish} loading={loading} timerRef={timerRef} handleTimer={handleTimer} allData={allData}/>
     
   );
 }
