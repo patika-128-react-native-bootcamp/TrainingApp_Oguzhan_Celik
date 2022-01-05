@@ -37,13 +37,14 @@ export default function NewActivity() {
   }
 
   const handleTimer=(t)=>{
-    console.log(t)
-    if(t%3==0){
+    if(t%5==0){
       getPosition()
     }
   }
 
-console.log(allData.allCoords);
+  const handleEnd=(t)=>{
+    setAllData({...allData,time:t})
+  }
 
   useEffect(()=>{
     Geolocation.getCurrentPosition((c)=>{
@@ -51,7 +52,9 @@ console.log(allData.allCoords);
         allCoords:[{
           latitude:c.coords.latitude,
           longitude:c.coords.longitude
-        }]
+        }],
+        distance:0,
+        time:0
       })
       setCoord({
         latitude:c.coords.latitude,
@@ -72,9 +75,13 @@ console.log(allData.allCoords);
       setAllData({
         allCoords:[...allData.allCoords,coord],
         distance:allData.distance + getDistanceFromLatLonInKm(allData.allCoords[length].latitude,allData.allCoords[length].longitude,coord.latitude,coord.longitude),
+        time:0
       })
     }
   },[coord])
+
+  console.log("asdsa",allData);
+
 
   if(loading){
     return <ActivityIndicator/>
@@ -88,13 +95,8 @@ console.log(allData.allCoords);
   }
 
   function handleFinish(){
-
     timerRef.current.stop();
   }
-
-
- 
- 
   //2 konum arasındaki mesafeyi ölçer
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     var R = 6371; // Radius of the earth in km
@@ -114,8 +116,9 @@ console.log(allData.allCoords);
     return deg * (Math.PI / 180);
   }
 
+  
   return (
-    <NewActivityLayout coord={coord} handleStart={handleStart} handleFinish={handleFinish} loading={loading} timerRef={timerRef} handleTimer={handleTimer} allData={allData}/>
+    <NewActivityLayout handleEnd={handleEnd} time={allData.time} distance={allData.distance}  coord={coord} handleStart={handleStart} handleFinish={handleFinish} loading={loading} timerRef={timerRef} handleTimer={handleTimer} allData={allData}/>
     
   );
 }
