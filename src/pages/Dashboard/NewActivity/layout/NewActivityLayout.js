@@ -9,7 +9,7 @@ import MapView, {
   Polygon
 } from 'react-native-maps';
 import {Timer} from 'react-native-element-timer';
-export default function NewActivityLayout({coord,handleStart,handleFinish,loading,timerRef,handleTimer,allData}) {
+export default function NewActivityLayout({coord,handleStart,handleFinish,timerRef,handleTimer,allData,distance,handleEnd,time}) {
     return (
         <View style={styles.container}>
             <Timer
@@ -18,7 +18,7 @@ export default function NewActivityLayout({coord,handleStart,handleFinish,loadin
                     textStyle={styles.timerText}
                     onTimes={e => {handleTimer(e)}}
                     onPause={e => {}}
-                    onEnd={e => {}}
+                    onEnd={e => {handleEnd(e)}}
                 />
          <MapView
                     style={{ flex: 4 }}
@@ -31,7 +31,9 @@ export default function NewActivityLayout({coord,handleStart,handleFinish,loadin
                         strokeWidth={6}
                 />
             </MapView>
-  
+          <Text>Distance:{distance}</Text>
+          <Text>Timer:{time}</Text>
+
         <View style={styles.buttonContainer}>
           <Button text={'Başlat'} onPress={handleStart} />
           <Button text={'Bitir'} onPress={handleFinish}/>
