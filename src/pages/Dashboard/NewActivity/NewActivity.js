@@ -2,6 +2,8 @@ import React, {useEffect, useState,useRef} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import NewActivityLayout from './layout/NewActivityLayout';
 import { ActivityIndicator } from 'react-native';
+import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 
 export default function NewActivity() {
   const [coord, setCoord] = useState({
@@ -14,16 +16,22 @@ export default function NewActivity() {
     distance:0,
     time:0
   });
+
+  const [userid,setUserid]=useState(auth().currentUser.uid)
+  
   const [loading,setLoading] = useState(false);
 
   const timerRef = useRef(null);
+
+  console.log(userid);
   
-  const getPosition=()=>{
+  const getPosition=(t)=>{
       Geolocation.getCurrentPosition(
         (c)=>{
             setCoord({
               latitude:c.coords.latitude,
-              longitude:c.coords.longitude
+              longitude:c.coords.longitude,
+              time:t
             })
         },
         (error)=>console.log(error),
@@ -37,13 +45,16 @@ export default function NewActivity() {
   }
 
   const handleTimer=(t)=>{
-    if(t%5==0){
-      getPosition()
+    if(t%10==0){
+      getPosition(t)
     }
+    setAllData({...allData,time:t})
   }
 
   const handleEnd=(t)=>{
     setAllData({...allData,time:t})
+    const reference = database().ref(`/Users/${userid}`);
+    reference.push(allData);
   }
 
   useEffect(()=>{
@@ -75,7 +86,7 @@ export default function NewActivity() {
       setAllData({
         allCoords:[...allData.allCoords,coord],
         distance:allData.distance + getDistanceFromLatLonInKm(allData.allCoords[length].latitude,allData.allCoords[length].longitude,coord.latitude,coord.longitude),
-        time:0
+        time:coord.time,
       })
     }
   },[coord])
@@ -94,8 +105,11 @@ export default function NewActivity() {
     }
   }
 
+
   function handleFinish(){
     timerRef.current.stop();
+    // const reference = database().ref('Users/');
+    // reference.push(allData);
   }
   //2 konum arasındaki mesafeyi ölçer
   function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
