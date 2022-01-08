@@ -6,10 +6,10 @@ export default StyleSheet.create({
   },
   comment_input: {
     marginTop: 5,
-    backgroundColor: '#e0e0e0',
     borderRadius: 5,
     borderWidth:1,
     marginLeft:5,
     marginRight:5,
+    borderColor:'#e57373',
   },
 });
