@@ -23,6 +23,24 @@ export default function LastActivity() {
         })
     }
 
+    //Eklencek değerleri öncekini silip üstüne ekler
+    function setDB(){
+        const reference = database().ref('car/rentable');
+        reference.set({
+            brand:'audi',
+            model:'A8',
+            price:127,
+        })
+    }
+
+    function pushDB(){
+        const reference = database().ref('car/rentable');
+        reference.push({
+            brand:'Passat',
+            model:'81',
+            price:650,
+        })
+    }
 
 
     return (
@@ -31,6 +49,7 @@ export default function LastActivity() {
             <LastActivityLayout/>
             <Button title='check DB' onPress={checkDB}/>
             <Button title='Listen DB' onPress={listenDB}/>
+            <Button title='Push DB' onPress={pushDB}/>
         </View>
     )
 }
