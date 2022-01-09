@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ActivityIndicator} from 'react-native';
+import {View, Text, ActivityIndicator, Image} from 'react-native';
 import styles from './NewActivityLayout.styles';
 import Button from '../../../../components/Button';
 import Modal from 'react-native-modal';
@@ -22,10 +22,19 @@ export default function NewActivityLayout({
   time,
   visible,
   onClose,
+  weatherData,
 }) {
   return (
     <View style={styles.container}>
-      <MapView style={styles.mapView} provider={PROVIDER_GOOGLE}>
+      <MapView
+        style={styles.mapView}
+        provider={PROVIDER_GOOGLE}
+        region={{
+          latitude: coord.latitude,
+          longitude: coord.longitude,
+          longitudeDelta: 0.1,
+          latitudeDelta: 0.1,
+        }}>
         <Marker coordinate={coord} />
         <Polyline
           coordinates={allData.allCoords}
@@ -33,7 +42,21 @@ export default function NewActivityLayout({
           strokeWidth={6}
         />
       </MapView>
-      <Timer
+
+      <View style={styles.modal_container}>
+        <View style={styles.inner_container}>
+          <Text>{weatherData.main.temp}</Text>
+          <Image
+            style={styles.weather_image}
+            source={{
+              uri: `http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`,
+            }}
+          />
+          <Text>{weatherData.weather[0].main}</Text>
+          <Text style={styles.distance}>Distance:{distance}</Text>
+          <View style={styles.timer_container}>
+            <Text style={styles.timer}>Time:</Text>
+            <Timer
               ref={timerRef}
               style={styles.timer}
               textStyle={styles.timer}
@@ -45,38 +68,13 @@ export default function NewActivityLayout({
                 handleEnd(e);
               }}
             />
-      
-      <Button text={'Başlat'} onPress={handleStart} />
-      <Modal
-        style={styles.modal}
-        isVisible={visible}
-        onSwipeComplete={onClose}
-        onBackButtonPress={onClose}
-        onBackdropPress={onClose}>
-        <View style={styles.modal_container}>
-          <View style={styles.inner_container}>
-            <Text style={styles.distance}>Distance:{distance}</Text>
-            <View style={styles.timer_container}>
-              <Text style={styles.timer}>Time:</Text>
-              <Timer
-              ref={timerRef}
-              style={styles.timer}
-              textStyle={styles.timer}
-              onTimes={e => {
-                handleTimer(e);
-              }}
-              onPause={e => {}}
-              onEnd={e => {
-                handleEnd(e);
-              }}
-            />
-            </View>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button text={'Bitir'} onPress={handleFinish} />
           </View>
         </View>
-      </Modal>
+        <View style={styles.buttonContainer}>
+          <Button text={'Başlat'} onPress={handleStart} />
+          <Button text={'Bitir'} onPress={handleFinish} />
+        </View>
+      </View>
     </View>
   );
 }
