@@ -1,7 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {Dimensions} from 'react-native'
 
-const {width} = Dimensions.get('window')
 
 export default StyleSheet.create({
     
@@ -10,6 +8,6 @@ export default StyleSheet.create({
         width:200,
         height:200,
         resizeMode:'contain',
-        tintColor:'#e57373',
+        tintColor:'#0277bd',
     }
 });

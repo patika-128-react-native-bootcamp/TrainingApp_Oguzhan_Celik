@@ -10,6 +10,6 @@ export default StyleSheet.create({
     borderWidth:1,
     marginLeft:5,
     marginRight:5,
-    borderColor:'#e57373',
+    borderColor:'#0277bd',
   },
 });

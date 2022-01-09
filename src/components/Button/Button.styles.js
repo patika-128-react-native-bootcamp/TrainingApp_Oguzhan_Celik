@@ -18,7 +18,7 @@ export default {
     marginRight: 60,
     marginTop: 10,
     padding: 13,
-    backgroundColor: '#e57373',
+    backgroundColor: '#0277bd',
     borderRadius: 5,
   },
   text: {
@@ -35,12 +35,12 @@ outline:StyleSheet.create({
     marginRight: 60,
     marginTop: 10,
     padding: 13,
-    borderColor: '#e57373',
+    borderColor: '#0277bd',
     borderWidth:1,
   },
   text: {
     ...base_style.text,
-    color: '#e57373',
+    color: '#0277bd',
     fontSize: 15,
   },
 }),
