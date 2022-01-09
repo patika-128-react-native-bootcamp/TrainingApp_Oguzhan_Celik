@@ -14,10 +14,12 @@ export default function NewActivity() {
   const [allData, setAllData] = useState({
     allCoords:[],
     distance:0,
-    time:0
+    time:0,
+    speed:0,
+    date:(new Date()).toISOString(),
   });
-
-  const [userid,setUserid]=useState(auth().currentUser.uid)
+ const [modalVisible,setModalVisible]=useState(false);
+ const [userid,setUserid]=useState(auth().currentUser.uid)
   
   const [loading,setLoading] = useState(false);
 
@@ -48,7 +50,6 @@ export default function NewActivity() {
     if(t%10==0){
       getPosition(t)
     }
-    setAllData({...allData,time:t})
   }
 
   const handleEnd=(t)=>{
@@ -65,7 +66,9 @@ export default function NewActivity() {
           longitude:c.coords.longitude
         }],
         distance:0,
-        time:0
+        time:0,
+        speed:0,
+        date:(new Date()).toISOString(),
       })
       setCoord({
         latitude:c.coords.latitude,
@@ -87,11 +90,13 @@ export default function NewActivity() {
         allCoords:[...allData.allCoords,coord],
         distance:allData.distance + getDistanceFromLatLonInKm(allData.allCoords[length].latitude,allData.allCoords[length].longitude,coord.latitude,coord.longitude),
         time:coord.time,
+        speed:allData.distance/coord.time,
+        date:(new Date()).toISOString(),
       })
     }
   },[coord])
 
-  console.log("asdsa",allData);
+
 
 
   if(loading){
@@ -101,12 +106,14 @@ export default function NewActivity() {
   function handleStart(){
     if(!status){
       timerRef.current.start();
+      setModalVisible(true)
       setStatus(true)
     }
   }
 
 
   function handleFinish(){
+    setModalVisible(false)
     timerRef.current.stop();
     // const reference = database().ref('Users/');
     // reference.push(allData);
@@ -132,7 +139,7 @@ export default function NewActivity() {
 
   
   return (
-    <NewActivityLayout handleEnd={handleEnd} time={allData.time} distance={allData.distance}  coord={coord} handleStart={handleStart} handleFinish={handleFinish} loading={loading} timerRef={timerRef} handleTimer={handleTimer} allData={allData}/>
+    <NewActivityLayout handleEnd={handleEnd} time={allData.time} distance={allData.distance}  coord={coord} handleStart={handleStart} handleFinish={handleFinish} loading={loading} timerRef={timerRef} handleTimer={handleTimer} allData={allData} visible={modalVisible} onClose={handleFinish}/>
     
   );
 }
