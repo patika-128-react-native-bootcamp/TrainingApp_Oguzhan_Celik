@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    marginTop:10,
+    marginTop: 10,
     backgroundColor: '#0277bd',
     marginBottom: 15,
     flexDirection: 'row',
@@ -13,28 +13,27 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.51,
     shadowRadius: 50,
-    elevation: 30,
-    padding:10,
-    marginLeft:10,
-    marginRight:10,
-    borderRadius:10,
-    color:'white',
-    justifyContent:'space-between'
+    elevation: 10,
+    padding: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 10,
+    color: 'white',
+    justifyContent: 'space-between',
   },
-  inner_container: {
+  inner_container: {},
+  time: {
+    color: 'white',
+    fontSize: 12,
+    marginTop: 10,
   },
-  time:{
-      color:'white',
-      fontSize:12,
-      marginTop:10,
+  distance: {
+    color: 'white',
+    fontSize: 12,
   },
-  distance:{
-    color:'white',
-    fontSize:12
+  date: {
+    color: 'white',
+    fontSize: 12,
+    fontStyle: 'italic',
   },
-  date:{
-      color:'white',
-      fontSize:12,
-      fontStyle:'italic'
-  }
 });

@@ -36,7 +36,12 @@ export default function SignUpLayout({
           </>
         )}
       </Formik>
-      <Button text={'Geri'} loading={loading} onPress={handleLogin} theme='outline' />
+      <Button
+        text={'Geri'}
+        loading={loading}
+        onPress={handleLogin}
+        theme="outline"
+      />
     </View>
   );
 }

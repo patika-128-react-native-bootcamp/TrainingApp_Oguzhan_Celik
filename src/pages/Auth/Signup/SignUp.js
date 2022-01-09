@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import SignUpLayout from './layout/SignUpLayout';
+import {showMessage} from 'react-native-flash-message';
+import parseAuthErrorMessage from '../../../utils/parseAuthErrorMessage';
 
 export default function Login({navigation}) {
   const [loading, setLoading] = useState(false);
@@ -27,6 +29,10 @@ export default function Login({navigation}) {
       setLoading(false);
       navigation.navigate('LoginPage');
     } catch (error) {
+      showMessage({
+        message: parseAuthErrorMessage(error.code),
+        type: 'danger',
+      });
       setLoading(false);
     }
   }
