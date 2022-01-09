@@ -11,8 +11,9 @@ export default StyleSheet.create({
         marginTop: 10,
         marginBottom:10,
         padding: 13,
-        backgroundColor: '#e57373',
+        backgroundColor: '#0277bd',
         borderRadius: 5,
         alignItems:'center',
     },
+    
 });
