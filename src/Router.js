@@ -1,10 +1,10 @@
 import React from 'react';
 import Navigation from './Navigation';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
 
 export default function Router() {
-  React.useEffect(()=>{
+  React.useEffect(() => {
     SplashScreen.hide();
-  },[]);
+  }, []);
   return <Navigation />;
 }

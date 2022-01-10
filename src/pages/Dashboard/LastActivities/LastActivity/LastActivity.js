@@ -14,7 +14,6 @@ export default function LastActivity() {
     const reference = database().ref(`/Users/${userid}`);
     reference.on('value', snapshot => {
       const response = snapshot.val();
-      console.log(response);
       const parsedData = parseActivityData(response);
       setActivityList(parsedData);
     });
@@ -23,10 +22,9 @@ export default function LastActivity() {
   const renderActivity = ({item}) => <ActivityCard activity={item} />;
 
   return (
-    <View>
-      <FlatList data={activityList} renderItem={renderActivity} />
-      <Text>Asd</Text>
-      <LastActivityLayout />
-    </View>
+    <LastActivityLayout
+      activityList={activityList}
+      renderActivity={renderActivity}
+    />
   );
 }

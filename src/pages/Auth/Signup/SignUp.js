@@ -1,19 +1,23 @@
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import SignUpLayout from './layout/SignUpLayout';
+import {showMessage} from 'react-native-flash-message';
+import parseAuthErrorMessage from '../../../utils/parseAuthErrorMessage';
+import database from '@react-native-firebase/database';
+
 
 export default function Login({navigation}) {
   const [loading, setLoading] = useState(false);
+  const user = auth().currentUser;
   function handleLogin() {
     navigation.goBack();
   }
-
+  
   const initialFromValues = {
     usermail: '',
     password: '',
     repassword: '',
   };
-
   function handleFormSubmit(formValues) {
     if (formValues.password !== formValues.repassword) {
       console.log('hata');
@@ -24,12 +28,19 @@ export default function Login({navigation}) {
         formValues.usermail,
         formValues.password,
       );
+      
       setLoading(false);
       navigation.navigate('LoginPage');
     } catch (error) {
+      showMessage({
+        message: parseAuthErrorMessage(error.code),
+        type: 'danger',
+      });
       setLoading(false);
     }
   }
+
+ 
 
   return (
     <SignUpLayout
@@ -37,6 +48,7 @@ export default function Login({navigation}) {
       handleFormSubmit={handleFormSubmit}
       handleLogin={handleLogin}
       loading={loading}
+      
     />
   );
 }

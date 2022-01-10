@@ -7,9 +7,9 @@ export default StyleSheet.create({
   comment_input: {
     marginTop: 5,
     borderRadius: 5,
-    borderWidth:1,
-    marginLeft:5,
-    marginRight:5,
-    borderColor:'#0277bd',
+    borderWidth: 1,
+    marginLeft: 5,
+    marginRight: 5,
+    borderColor: '#0277bd',
   },
 });
