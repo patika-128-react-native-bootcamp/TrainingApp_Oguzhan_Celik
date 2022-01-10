@@ -24,12 +24,12 @@ export default StyleSheet.create({
   inner_container: {},
   time: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 15,
     marginTop: 10,
   },
   distance: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 15,
   },
   date: {
     color: 'white',

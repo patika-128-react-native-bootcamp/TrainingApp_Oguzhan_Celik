@@ -10,8 +10,8 @@ export default function ActivityCard({activity}) {
           Distance:{Math.floor(activity.distance)}
         </Text>
         <Text style={styles.time}>Time:{activity.time}</Text>
-        <Text style={styles.date}>
-          {Math.floor(activity.distance / activity.time)}
+        <Text style={styles.time}>Speed: 
+          {Math.floor(activity.distance / activity.time)} km/s
         </Text>
       </View>
       <Text style={styles.date}>{activity.date}</Text>

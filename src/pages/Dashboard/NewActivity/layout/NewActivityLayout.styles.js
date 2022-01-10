@@ -9,15 +9,42 @@ export default StyleSheet.create({
     flex: 4,
   },
   buttonContainer: {},
-  inner_container: {},
-  timer_container: {},
-  modal_container: {},
-  weather_image: {},
-  modal: {},
-  distance: {},
-  timer: {
-    fontSize: 20,
+  inner_container: {
+    borderWidth:1,
+    padding:15,
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
+
+  timer_container:{
+    flexDirection:'row'
+  },
+  distance: {
+    fontSize: 15,
     fontWeight: 'bold',
     color: 'black',
+  },
+  timer: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  temp:{
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  weather_image:{
+    width:30,
+    height:30
+  },
+  main:{
+    marginRight:15,
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  image_container:{
+    flexDirection:'row'
   },
 });

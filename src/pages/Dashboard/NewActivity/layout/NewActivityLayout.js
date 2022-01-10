@@ -42,19 +42,13 @@ export default function NewActivityLayout({
           strokeWidth={6}
         />
       </MapView>
-
-      <View style={styles.modal_container}>
+      
         <View style={styles.inner_container}>
-          <Text>{weatherData.main.temp}</Text>
-          <Image
-            style={styles.weather_image}
-            source={{
-              uri: `http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`,
-            }}
-          />
-          <Text>{weatherData.weather[0].main}</Text>
+         <View style={styles.time_distance_container}>
+
           <Text style={styles.distance}>Distance:{distance}</Text>
           <View style={styles.timer_container}>
+            
             <Text style={styles.timer}>Time:</Text>
             <Timer
               ref={timerRef}
@@ -69,12 +63,27 @@ export default function NewActivityLayout({
               }}
             />
           </View>
+         </View>
+          <View>
+
+          <Text style={styles.temp}>Temp:{weatherData.main.temp}°C</Text>
+          <View style={styles.image_container}>
+          <Text style={styles.main}>{weatherData.weather[0].main}</Text>
+          <Image
+            style={styles.weather_image}
+            source={{
+              uri: `http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`,
+            }}
+          />
+          
+          </View>
+          </View>
         </View>
         <View style={styles.buttonContainer}>
           <Button text={'Başlat'} onPress={handleStart} />
           <Button text={'Bitir'} onPress={handleFinish} />
         </View>
       </View>
-    </View>
+
   );
 }

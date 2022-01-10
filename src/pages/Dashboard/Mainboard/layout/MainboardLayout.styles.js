@@ -3,11 +3,12 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    marginLeft:20,
-    
+    paddingLeft:15,
+    flex:1,
+    backgroundColor:'white'
   },
   text_container:{
-    marginTop:50,
+    marginTop:10,
     padding:30
   },
   text_hello:{
@@ -27,22 +28,101 @@ export default StyleSheet.create({
     fontFamily:'Poppins-SemiBold',
     marginTop:20,
   },
+  icon_distance:{
+    padding:3,
+    marginTop:50,
+    borderRadius:10,
+    backgroundColor:'white',
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  stats_container:{
+    flexDirection:'row'
+  },
   distance_container:{
+    marginRight:-15,
     marginTop:-15,
     borderRadius:25,
     marginLeft:30,
-    width:100,
-    height:150,
+    width:110,
+    height:210,
     backgroundColor:'#CFECF6',
+    alignItems:'center'
+  },
+  text_distance:{
+    marginTop:5,
+    fontFamily:'Poppins-SemiBold',
+    color:'#0A0000',
+  },
+  text_km:{
+    marginTop:-5,
   },
   button: {
-    marginLeft: 60,
-    marginRight: 60,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 13,
-    backgroundColor: '#0277bd',
-    borderRadius: 5,
-    alignItems: 'center',
+    marginTop:10,
+    borderRadius:25,
+    marginLeft:90,
+    width:220,
+    height:100,
+    backgroundColor:'#FF6666',
+    alignItems:'center',
+    justifyContent:'center',
   },
+  time_container:{
+    marginTop:-15,
+    borderRadius:25,
+    marginLeft:30,
+    width:200,
+    height:100,
+    backgroundColor:'#EDF5E1',
+    alignItems:'center',
+    flexDirection:'row'
+  },
+  icon_time:{
+    padding:3,
+    marginLeft:35,
+    borderRadius:10,
+    backgroundColor:'white',
+  },
+  time_total_container:{
+    flexDirection:'column'
+  },
+  text_time:{
+    marginLeft:15,
+    fontFamily:'Poppins-SemiBold',
+    color:'#0A0000',
+  },
+  text_total_time:{
+    marginTop:-5,
+    marginLeft:15,
+  },
+  exercies_total_container:{
+    flexDirection:'column'
+  },
+  exercises_container:{
+    marginTop:10,
+    borderRadius:25,
+    marginLeft:30,
+    width:200,
+    height:100,
+    backgroundColor:'#CCCCCC',
+    alignItems:'center',
+    flexDirection:'row'
+  },
+  icon_exercises:{
+    padding:3,
+    marginLeft:35,
+    borderRadius:10,
+    backgroundColor:'white',
+  },
+  text_exercises:{
+    marginLeft:15,
+    fontFamily:'Poppins-SemiBold',
+    color:'#0A0000',
+  },
+  text_total_exercises:{
+    marginTop:-5,
+    marginLeft:15,
+  },
+
+
 });
