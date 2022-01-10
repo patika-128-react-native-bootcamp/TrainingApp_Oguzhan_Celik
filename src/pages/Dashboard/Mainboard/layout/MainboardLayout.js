@@ -17,7 +17,7 @@ export default function MainboardLayout({Logout,username,distance,time,number}) 
       </View>
       <View style={styles.stats_container}>
         <View style={styles.distance_container}>
-          <Icon style={styles.icon_distance} name="google-street-view" size={30} color="#0A0000"/>
+          <Icon style={styles.icon_distance} name="run" size={30} color="#0A0000"/>
           <Text style={styles.text_distance}>{Math.floor(distance)}</Text>
           <Text style={styles.text_km}>km</Text>
         </View>
